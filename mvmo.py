@@ -1,3 +1,4 @@
+import numpy as np
 
 
 class MVMO:
@@ -11,9 +12,46 @@ class MVMO:
         self.init_val_shape_factor_sd = init_val_shape_factor_sd
 
 
+    def optimize(self, boundaries: tuple[int, int]):
+        pass
+
+
+    def init_population(self, dim: int, size: int = 2, low=0.0, high=1.0) -> list[np.ndarray]:
+        """
+        Initialize population of given size with individuals of given dimension and constraints
+        :param dim: dimension of every individual
+        :param size: size of initialized population
+        :param low: lower limit of the range of every gene
+        :param high: higher limit of the range of every gene
+        :return: population (list) of individuals (numpy arrays)
+        """
+        return [np.random.uniform(low=low, high=high, size=(dim,)) for _ in range(size)]
+
+
+    def normalize_population(self, population: list[np.ndarray], low, high):
+        """
+        Normalizes the input population
+        :param population: population to normalize
+        :param low: lower limit of the range of every gene
+        :param high: higher limit of the range of every gene
+        :return: normalized population (list)
+        """
+        return [(ind - low) / (high - low) for ind in population]
+
+
+    def denormalize_population(population: list[np.ndarray], low, high):
+        """
+        Denormalizes the input population
+        :param population: population to denormalize
+        :param low: lower limit of the range of every gene
+        :param high: higher limit of the range of every gene
+        :return: denormalized population (list)
+        """
+        return [(ind * (high - low)) + low for ind in population]
 
 
 
 if __name__ == '__main__':
     optimizer = MVMO(10000, 100, 5, 3)
+
 
