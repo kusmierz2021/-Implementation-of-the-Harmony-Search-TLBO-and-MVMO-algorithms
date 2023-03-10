@@ -2,12 +2,13 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from mvmo import MVMO
+from optimization_functions import rastrigins_function
 
 
 def test_init_population():
-    optimizer = MVMO(10000, 100, 5, 3)
-    population_1 = optimizer.init_population(3, 3)
-    population_2 = optimizer.init_population(2, 10, -5.12, 5.12)
+    optimizer = MVMO(10000, 3, 2, (-5.12, 5.12))
+    population_1 = optimizer.normalize_population(optimizer.init_population(size=3))
+    population_2 = optimizer.init_population(10)
 
     assert len(population_1) == 3
     assert len(population_1[0]) == 3
@@ -16,16 +17,17 @@ def test_init_population():
     assert 0 <= population_1[2][2] <= 1
 
     assert len(population_2) == 10
-    assert len(population_2[0]) == 2
+    assert len(population_2[0]) == 3
     assert -5.12 <= population_2[0][0] <= 5.12
     assert -5.12 <= population_2[1][1] <= 5.12
+    assert -5.12 <= population_2[2][2] <= 5.12
 
 
-def test__de_normalize_population():
-    optimizer = MVMO(10000, 100, 5, 3)
-    population = optimizer.init_population(2, 10, -5.12, 5.12)
-    normalized_population = optimizer.normalize_population(population, -5.12, 5.12)
-    denormalized_population = optimizer.denormalize_population(normalized_population, -5.12, 5.12)
+def test_de_normalize_population():
+    optimizer = MVMO(10000, 5, 3, (-5.12, 5.12))
+    population = optimizer.init_population(5)
+    normalized_population = optimizer.normalize_population(population)
+    denormalized_population = optimizer.denormalize_population(normalized_population)
 
     assert np.array_equal(denormalized_population, population)
     assert max([ind.max() for ind in normalized_population]) <= 1.0
@@ -119,7 +121,36 @@ def test_transformation():
 
 
 def test_count_si():
-    optimizer = MVMO(10000, 100, 5, 3)
+    optimizer = MVMO(10000, 5, 3, (-5.12, 5.12))
     last_no_zero_si = 20
     assert optimizer.count_si(0.5, 0.5, np.nan, last_no_zero_si)[0] == last_no_zero_si
     assert optimizer.count_si(0.5, 0.5, np.inf, last_no_zero_si)[0] == last_no_zero_si
+
+
+def test_mutation():
+    optimizer = MVMO(1000, 6, 2, (-5.12, 5.12))
+    population = optimizer.init_population(4)
+    normalized_population = optimizer.normalize_population(population)
+    best_population, mean_individual, var_individual = optimizer.evaluation(normalized_population, rastrigins_function)
+    best_individual = best_population[0][0]
+    mutated_population = optimizer.mutation(normalized_population, mean_individual, var_individual, best_individual)
+
+    assert all(mutated == best for (mutated, best) in list(zip(mutated_population[0], best_individual))[2:])
+    assert all(mutated == best for (mutated, best) in list(zip(mutated_population[1], best_individual))[:2])
+    assert all(mutated == best for (mutated, best) in list(zip(mutated_population[1], best_individual))[4:])
+    assert all(mutated == best for (mutated, best) in list(zip(mutated_population[2], best_individual))[:4])
+    assert all(mutated == best for (mutated, best) in list(zip(mutated_population[3], best_individual))[2:])
+
+    assert all(0.0 <= gene <= 1.0 for gene in mutated_population[0][:2])
+    assert all(0.0 <= gene <= 1.0 for gene in mutated_population[1][2:4])
+    assert all(0.0 <= gene <= 1.0 for gene in mutated_population[2][4:])
+    assert all(0.0 <= gene <= 1.0 for gene in mutated_population[3][:2])
+
+
+def test_evaluation():
+    optimizer = MVMO(1000, 6, 3, (-5.12, 5.12))
+    population = optimizer.init_population(5)
+
+    best_population, mean_individual, var_individual = optimizer.evaluation(population, rastrigins_function)
+    assert len(best_population) == 5
+    assert len(best_population[0][0]) == len(mean_individual) == len(var_individual)
