@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 
 class MVMO:
@@ -45,6 +46,13 @@ class MVMO:
         :return: denormalized population (list)
         """
         return [(ind * (high - low)) + low for ind in population]
+
+    @staticmethod
+    def transformation(random_gene, mean_gene, si1, si2):
+        def transform(ui):
+            return mean_gene * (1 - math.exp(-1 * ui * si1)) + (1 - mean_gene) * math.exp((ui - 1) * si2)
+
+        return transform(random_gene) + (1 - transform(1) + transform(0)) * random_gene - transform(0)
 
 
 if __name__ == '__main__':
