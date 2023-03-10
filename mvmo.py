@@ -50,8 +50,8 @@ class MVMO:
                 best_individual = best_population[0]
                 print(f"new best solution: {self.denormalize_population([best_individual[0]])} -> {best_individual[1]}")
 
-            normalized_population = self.mutation(normalized_population, mean_individual, var_individual, best_individual[0])
-
+            normalized_population = self.mutation(normalized_population, mean_individual,
+                                                  var_individual, best_individual[0])
 
     def init_population(self, size: int = 2) -> list[np.ndarray]:
         """
@@ -59,7 +59,8 @@ class MVMO:
         :param size: size of initialized population
         :return: population (list) of individuals (numpy arrays)
         """
-        return [np.random.uniform(low=self.boundaries[0], high=self.boundaries[1], size=(self.dimensions,)) for _ in range(size)]
+        return [np.random.uniform(low=self.boundaries[0], high=self.boundaries[1],
+                                  size=(self.dimensions,)) for _ in range(size)]
 
     def normalize_population(self, population: list[np.ndarray]):
         """
