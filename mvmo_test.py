@@ -61,7 +61,7 @@ def test_transformation():
     plt.ylabel("xi")
     plt.xlabel("random x")
     plt.title("effects of mean of dynamic population on the transformation function \nfor shape si1 = si2 = 10")
-    plt.show()
+    # plt.show()
 
     # Effects of shaping scaling factor on the transformation function h
     y = [MVMO.transformation(random_xi, 0.5, si1=0, si2=0) for random_xi in x]
@@ -86,7 +86,7 @@ def test_transformation():
     plt.ylabel("xi")
     plt.xlabel("random x")
     plt.title("effects of shaping scaling factor on the transformation function \nfor mean xi = 0.5")
-    plt.show()
+    # plt.show()
 
     # Effects of different shape factors si1 =/= si2
     y = [MVMO.transformation(random_xi, 0.5, si1=10, si2=10) for random_xi in x]
@@ -105,7 +105,7 @@ def test_transformation():
     plt.ylabel("xi")
     plt.xlabel("random x")
     plt.title("effects of different shape factors si1 =/= si2 \nfor mean xi = 0.5")
-    plt.show()
+    # plt.show()
 
     fig, ax = plt.subplots()
     ax.plot(x, y, "green", label="si1 = si2 = 10", linestyle="--")
@@ -115,4 +115,11 @@ def test_transformation():
     plt.ylabel("xi")
     plt.xlabel("random x")
     plt.title("effects of different shape factors si1 =/= si2 \nfor mean xi = 0.5")
-    plt.show()
+    # plt.show()
+
+
+def test_count_si():
+    optimizer = MVMO(10000, 100, 5, 3)
+    last_no_zero_si = 20
+    assert optimizer.count_si(0.5, 0.5, np.nan, last_no_zero_si)[0] == last_no_zero_si
+    assert optimizer.count_si(0.5, 0.5, np.inf, last_no_zero_si)[0] == last_no_zero_si
