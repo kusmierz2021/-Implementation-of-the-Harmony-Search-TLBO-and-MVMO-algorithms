@@ -35,9 +35,12 @@ class MVMO:
         self.kd = 0.0505 / self.dimensions + 1.0
 
     def optimize(self, population: list[np.ndarray]):
+        # TODO: documentation
         normalized_population = self.normalize_population(population)
         best_population = best_individual = None
 
+
+        # TODO: maybe add possibility to choose other stopping criteria
         for _ in tqdm(range(self.iterations)):
             # TODO: n_best_size is magic constant, change it
             best_population, mean_individual, var_individual = self.evaluation(normalized_population,
@@ -80,13 +83,14 @@ class MVMO:
 
     @staticmethod
     def transformation(random_gene, mean_gene, si1, si2):
+        # TODO: documentation
         def transform(ui):
             return mean_gene * (1 - math.exp(-1 * ui * si1)) + (1 - mean_gene) * math.exp((ui - 1) * si2)
 
         return transform(random_gene) + (1 - transform(1) + transform(0)) * random_gene - transform(0)
 
     def count_si(self, best_gene, mean_gene, var_gene, last_no_zero_si):
-
+        # TODO: documentation
         if not np.isfinite(var_gene):
             si1 = si2 = last_no_zero_si
             if last_no_zero_si < self.val_shape_factor_sd:
@@ -143,6 +147,7 @@ class MVMO:
 
     def evaluation(self, population: list[np.ndarray], fitness_function: callable,
                    n_best_size: int = 10, best_population=None) -> tuple:
+        # TODO: documentation
         if best_population is not None:
             population = population + [ind[0] for ind in best_population]
 
