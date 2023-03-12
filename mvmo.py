@@ -4,9 +4,9 @@ from numpy.random import uniform
 import copy
 from optimization_functions import rastrigins_function
 from tqdm import tqdm
+from evolutionary_algorithm import EvolutionaryAlgorithm
 
-
-class MVMO:
+class MVMO(EvolutionaryAlgorithm):
     def __init__(self, iterations: int, dimensions: int, mutation_size: int, boundaries: tuple[float, float],
                  shaping_scaling_factor_fs=1.0, asymmetry_factor_af=1.0, val_shape_factor_sd=75.0):
         """
@@ -25,10 +25,8 @@ class MVMO:
         :param val_shape_factor_sd: between 10.0 and 90.0, by default 75.0
         :type val_shape_factor_sd: float
         """
-        self.iterations = iterations
-        self.dimensions = dimensions
+        super().__init__(iterations, dimensions, boundaries)
         self.mutation_size = mutation_size
-        self.boundaries = boundaries
         self.shaping_scaling_factor_fs = shaping_scaling_factor_fs
         self.asymmetry_factor_af = asymmetry_factor_af
         self.val_shape_factor_sd = val_shape_factor_sd
@@ -56,14 +54,14 @@ class MVMO:
             normalized_population = self.mutation(normalized_population, mean_individual,
                                                   var_individual, best_individual[0])
 
-    def init_population(self, size: int = 2) -> list[np.ndarray]:
-        """
-        Initialize population of given size with individuals of given dimension and constraints
-        :param size: size of initialized population
-        :return: population (list) of individuals (numpy arrays)
-        """
-        return [uniform(low=self.boundaries[0], high=self.boundaries[1],
-                                  size=(self.dimensions,)) for _ in range(size)]
+    # def init_population(self, size: int = 2) -> list[np.ndarray]:
+    #     """
+    #     Initialize population of given size with individuals of given dimension and constraints
+    #     :param size: size of initialized population
+    #     :return: population (list) of individuals (numpy arrays)
+    #     """
+    #     return [uniform(low=self.boundaries[0], high=self.boundaries[1],
+    #                               size=(self.dimensions,)) for _ in range(size)]
 
     def normalize_population(self, population: list[np.ndarray]):
         """
