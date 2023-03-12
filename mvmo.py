@@ -167,3 +167,6 @@ if __name__ == '__main__':
     optimizer = MVMO(10000, 6, 3, boundaries)
     population = optimizer.init_population(1000)
     optimizer.optimize(population)
+
+
+#TODO: check if boundaries are treated as sharp limits
