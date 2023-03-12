@@ -62,7 +62,7 @@ class MVMO:
         :param size: size of initialized population
         :return: population (list) of individuals (numpy arrays)
         """
-        return [np.random.uniform(low=self.boundaries[0], high=self.boundaries[1],
+        return [uniform(low=self.boundaries[0], high=self.boundaries[1],
                                   size=(self.dimensions,)) for _ in range(size)]
 
     def normalize_population(self, population: list[np.ndarray]):
