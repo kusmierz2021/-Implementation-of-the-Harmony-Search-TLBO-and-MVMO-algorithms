@@ -125,8 +125,6 @@ def schaffers_f7_function(vec: np.ndarray) -> float:
         :rtype: float
     """
     d = len(vec)
-    # vec_s = np.ndarray([np.sqrt(vec[i]**2 + vec[i+1]**2) for i in range(d-1)])
-    # return (1/(d-1) * sum([np.sqrt(s) * (np.sin((50.0 * s)**(0.2))+1) for s in vec_s]))**2
     vec_x = vec[1:]
     return (1/(d-1) * sum([np.sqrt(np.sqrt(x1**2 + x2**2)) * (np.sin(50.0 * np.sqrt(x1**2 + x2**2)**(0.2))+1) for x1, x2 in zip(vec, vec_x)]))**2
 
@@ -141,3 +139,15 @@ def hgbat_function(vec: np.ndarray) -> float:
     """
     d = len(vec)
     return abs(sum([x**2 for x in vec])**2 - sum(vec)**2)**(1/2) + (0.5 * sum([x**2 for x in vec]) + sum(vec))/d + 0.5
+
+
+def griewanks_function(vec: np.ndarray) -> float:
+    """
+
+        :param vec: real numbers vector, usually includes numbers from [-100, 100]
+        :type vec: numpy.ndarray
+        :return: value of function
+        :rtype: float
+    """
+
+    return sum([x**2 / 4000 for x in vec]) - math.prod([np.cos(vec[i] / np.sqrt(i+1)) for i in range(len(vec))]) + 1
