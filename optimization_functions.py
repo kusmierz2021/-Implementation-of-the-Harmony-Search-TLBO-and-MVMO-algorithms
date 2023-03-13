@@ -44,3 +44,14 @@ def expanded_schaffers_function(vec: np.ndarray) -> float:
         return 0.5 + (np.sin((x**2 + y**2))**2 - 0.5) / (1 + 0.001 * (x**2 + y**2))**2
 
     return sum([schaffers_function(vec[ind % len(vec)], vec[(ind+1) % len(vec)]) for ind in range(len(vec))])
+
+
+def bent_cigar_function(vec: np.ndarray) -> float:
+    """
+
+        :param vec: real numbers vector, usually includes numbers from [-100, 100]
+        :type vec: numpy.ndarray
+        :return: value of function
+        :rtype: float
+    """
+    return vec[0]**2 + 10**6 * sum(x**2 for x in vec[1:])
