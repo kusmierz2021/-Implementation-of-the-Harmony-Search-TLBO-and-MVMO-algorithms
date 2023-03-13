@@ -4,6 +4,7 @@ from numpy.random import randint
 from optimization_functions import rastrigins_function
 from tqdm import tqdm
 
+
 class HS(EvolutionaryAlgorithm):
     def __init__(self, iterations: int, dimensions: int, boundaries: tuple[float, float], hmcr: float = None,
                  par: float = None):
@@ -13,7 +14,8 @@ class HS(EvolutionaryAlgorithm):
 
     def evaluation(self, population: list[np.ndarray], fitness_function: callable, child: np.ndarray):
         population = population + [child]
-        best_population = sorted([(ind, fitness_function(ind)) for ind in population], key=lambda ind: ind[1], reverse=True).copy()[:len(population) - 1]
+        best_population = sorted([(ind, fitness_function(ind)) for ind in population], key=lambda ind: ind[1],
+                                 reverse=True).copy()[:len(population) - 1]
         return best_population
 
     def reproduction(self, population: list[np.ndarray]) -> np.ndarray:
@@ -42,4 +44,3 @@ if __name__ == '__main__':
     optimizer = HS(10000, 6, boundaries)
     population = optimizer.init_population(10_000)
     optimizer.optimize(population, rastrigins_function)
-

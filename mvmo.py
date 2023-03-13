@@ -6,6 +6,7 @@ from optimization_functions import rastrigins_function
 from tqdm import tqdm
 from evolutionary_algorithm import EvolutionaryAlgorithm
 
+
 class MVMO(EvolutionaryAlgorithm):
     def __init__(self, iterations: int, dimensions: int, mutation_size: int, boundaries: tuple[float, float],
                  shaping_scaling_factor_fs=1.0, asymmetry_factor_af=1.0, val_shape_factor_sd=75.0):
@@ -36,7 +37,6 @@ class MVMO(EvolutionaryAlgorithm):
         # TODO: documentation
         normalized_population = self.normalize_population(population)
         best_population = best_individual = None
-
 
         # TODO: maybe add possibility to choose other stopping criteria
         for _ in tqdm(range(self.iterations)):
@@ -167,4 +167,4 @@ if __name__ == '__main__':
     optimizer.optimize(population, rastrigins_function)
 
 
-#TODO: check if boundaries are treated as sharp limits
+# TODO: check if boundaries are treated as sharp limits
