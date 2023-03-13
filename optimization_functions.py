@@ -1,5 +1,7 @@
 import math
 import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib as mpl
 
 
 def rastrigins_function(vec: np.ndarray) -> float:
@@ -66,7 +68,8 @@ def levy_function(vec: np.ndarray) -> float:
         :rtype: float
     """
     vec_w = 1 + (vec - 1) / 4
-    return np.sin(math.pi * vec_w[0])**2 + (vec_w[-1] - 1)**2 * (1 + np.sin(2 * math.pi * vec_w[-1])**2) + sum([(wi-1)**2 * (1 + 10 * np.sin(math.pi * wi + 1)**2) for wi in vec_w[:-1]])
+    return np.sin(math.pi * vec_w[0])**2 + (vec_w[-1] - 1)**2 * (1 + np.sin(2 * math.pi * vec_w[-1])**2) \
+           + sum([(wi - 1)**2 * (1 + 10 * np.sin(math.pi * wi + 1)**2) for wi in vec_w[:-1]])
 
 
 def high_conditioned_elliptic_function(vec: np.ndarray) -> float:
@@ -78,7 +81,7 @@ def high_conditioned_elliptic_function(vec: np.ndarray) -> float:
         :rtype: float
     """
     d = len(vec)
-    return sum([(10**6)**(i/(d-1)) * vec[i]**2 for i in range(d)])
+    return sum([(10**6)**(i / (d - 1)) * vec[i]**2 for i in range(d)])
 
 
 def happycat_function(vec: np.ndarray) -> float:
@@ -90,7 +93,7 @@ def happycat_function(vec: np.ndarray) -> float:
         :rtype: float
     """
     d = len(vec)
-    return abs(sum([x**2 for x in vec]) - d)**(1/4) + (0.5 * sum([x**2 for x in vec]) + sum(vec)) / d + 0.5
+    return abs(sum([x**2 for x in vec]) - d)**(1 / 4) + (0.5 * sum([x**2 for x in vec]) + sum(vec)) / d + 0.5
 
 
 def discus_function(vec: np.ndarray) -> float:
@@ -113,7 +116,8 @@ def ackleys_function(vec: np.ndarray) -> float:
         :rtype: float
     """
     d = len(vec)
-    return -20 * np.exp(-0.2 * np.sqrt(1/d * sum([x**2 for x in vec]))) - np.exp(1/d * sum([np.cos(2*math.pi*x) for x in vec])) + 20 + math.e
+    return -20 * np.exp(-0.2 * np.sqrt(1 / d * sum([x**2 for x in vec]))) - \
+           np.exp(1 / d * sum([np.cos(2 * math.pi * x) for x in vec])) + 20 + math.e
 
 
 def schaffers_f7_function(vec: np.ndarray) -> float:
@@ -126,7 +130,8 @@ def schaffers_f7_function(vec: np.ndarray) -> float:
     """
     d = len(vec)
     vec_x = vec[1:]
-    return (1/(d-1) * sum([np.sqrt(np.sqrt(x1**2 + x2**2)) * (np.sin(50.0 * np.sqrt(x1**2 + x2**2)**(0.2))+1) for x1, x2 in zip(vec, vec_x)]))**2
+    return (1 / (d - 1) * sum([np.sqrt(np.sqrt(x1**2 + x2**2)) * (np.sin(50.0 * np.sqrt(x1**2 + x2**2)**0.2) + 1)
+                              for x1, x2 in zip(vec, vec_x)]))**2
 
 
 def hgbat_function(vec: np.ndarray) -> float:
@@ -138,7 +143,8 @@ def hgbat_function(vec: np.ndarray) -> float:
         :rtype: float
     """
     d = len(vec)
-    return abs(sum([x**2 for x in vec])**2 - sum(vec)**2)**(1/2) + (0.5 * sum([x**2 for x in vec]) + sum(vec))/d + 0.5
+    return abs(sum([x**2 for x in vec])**2 - sum(vec)**2)**(1 / 2) +\
+           (0.5 * sum([x**2 for x in vec]) + sum(vec)) / d + 0.5
 
 
 def griewanks_function(vec: np.ndarray) -> float:
@@ -150,4 +156,28 @@ def griewanks_function(vec: np.ndarray) -> float:
         :rtype: float
     """
 
-    return sum([x**2 / 4000 for x in vec]) - math.prod([np.cos(vec[i] / np.sqrt(i+1)) for i in range(len(vec))]) + 1
+    return sum([x**2 / 4000 for x in vec]) - math.prod([np.cos(vec[i] / np.sqrt(i + 1)) for i in range(len(vec))]) + 1
+
+
+def visualize(boundaries: tuple[float, float], optimize_function: callable):
+    """
+    Plot every optimization function you would like to use.
+    :param boundaries: lower and higher limit of the range of every gene
+    :type boundaries: tuple of floats
+    :param optimize_function: function to be plotted
+    :type optimize_function: callable function
+    """
+    mpl.use('TkAgg')
+    x = np.linspace(boundaries[0], boundaries[1], 1000)
+    y = np.linspace(boundaries[0], boundaries[1], 1000)
+    x, y = np.meshgrid(x, y)
+    z = np.array([optimize_function(np.array([x, y])) for x, y in zip(x, y)])
+
+    ax = plt.axes(projection="3d")
+    ax.plot_surface(x, y, z, cmap="viridis")
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('f(x, y)')
+    ax.view_init(10, 10)
+    plt.title(f"{optimize_function.__name__} (2D)")
+    plt.show()

@@ -1,7 +1,6 @@
 import optimization_functions
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib as mpl
+# from optimization_functions import visualize
 
 
 def test_rastrigins_function():
@@ -19,20 +18,7 @@ def test_rastrigins_function():
                                                                       4.52299, 4.52299, 4.52299])), 5) == 282.47303
 
     # plot Rastrigin's Function (2D)
-    # mpl.use('TkAgg')
-    # x = np.linspace(-5.12, 5.12, 1000)
-    # y = np.linspace(-5.12, 5.12, 1000)
-    # x, y = np.meshgrid(x, y)
-    # z = np.array([optimization_functions.rastrigins_function(np.array([x, y])) for x, y in zip(x, y)])
-    #
-    # ax = plt.axes(projection="3d")
-    # ax.plot_surface(x, y, z, cmap="viridis")
-    # ax.set_xlabel('x')
-    # ax.set_ylabel('y')
-    # ax.set_zlabel('f(x, y)')
-    # ax.view_init(10, 10)
-    # plt.title("Rastrigin's Function (2D)")
-    # plt.show()
+    # visualize((-5.12, 5.12), optimization_functions.rastrigins_function)
 
 
 def test_zakharov_function():
@@ -45,20 +31,7 @@ def test_zakharov_function():
     assert round(optimization_functions.zakharov_function(np.array([0])), 2) == 0
 
     # plot Zakharov Function (2D)
-    # mpl.use('TkAgg')
-    # x = np.linspace(-5, 10, 1000)
-    # y = np.linspace(-5, 10, 1000)
-    # x, y = np.meshgrid(x, y)
-    # z = np.array([optimization_functions.zakharov_function(np.array([x, y])) for x, y in zip(x, y)])
-    #
-    # ax = plt.axes(projection="3d")
-    # ax.plot_surface(x, y, z, cmap="viridis")
-    # ax.set_xlabel('x')
-    # ax.set_ylabel('y')
-    # ax.set_zlabel('f(x, y)')
-    # ax.view_init(10, 10)
-    # plt.title('Zakharov Function (2D)')
-    # plt.show()
+    # visualize((-5, 10), optimization_functions.zakharov_function)
 
 
 def test_rosenbrock_function():
@@ -71,20 +44,7 @@ def test_rosenbrock_function():
     assert round(optimization_functions.rosenbrock_function(np.array([1])), 2) == 0
 
     # plot Rosenbrock's Function (2D)
-    # mpl.use('TkAgg')
-    # x = np.linspace(-10, 10, 1000)
-    # y = np.linspace(-10, 10, 1000)
-    # x, y = np.meshgrid(x, y)
-    # z = np.array([optimization_functions.rosenbrock_function(np.array([x, y])) for x, y in zip(x, y)])
-    #
-    # ax = plt.axes(projection="3d")
-    # ax.plot_surface(x, y, z, cmap="viridis")
-    # ax.set_xlabel('x')
-    # ax.set_ylabel('y')
-    # ax.set_zlabel('f(x, y)')
-    # ax.view_init(10, 10)
-    # plt.title('Rosenbrock's Function (2D)')
-    # plt.show()
+    # visualize((-10, 10), optimization_functions.rosenbrock_function)
 
 
 def test_expanded_schaffers_function():
@@ -96,20 +56,7 @@ def test_expanded_schaffers_function():
     assert round(optimization_functions.expanded_schaffers_function(np.array([0, 0])), 2) == 0
 
     # plot Expaned Schaffer's Function (2D)
-    # mpl.use('TkAgg')
-    # x = np.linspace(-100, 100, 1000)
-    # y = np.linspace(-100, 100, 1000)
-    # x, y = np.meshgrid(x, y)
-    # z = np.array([optimization_functions.expanded_schaffers_function(np.array([x, y])) for x, y in zip(x, y)])
-    #
-    # ax = plt.axes(projection="3d")
-    # ax.plot_surface(x, y, z, cmap="viridis")
-    # ax.set_xlabel('x')
-    # ax.set_ylabel('y')
-    # ax.set_zlabel('f(x, y)')
-    # ax.view_init(10, 10)
-    # plt.title("Expanded Schaffer's Function (2D)")
-    # plt.show()
+    # visualize((-100, 100), optimization_functions.expanded_schaffers_function)
 
 
 def test_bent_cigar_function():
@@ -122,20 +69,7 @@ def test_bent_cigar_function():
     assert round(optimization_functions.bent_cigar_function(np.array([0])), 2) == 0
 
     # plot Bent Cigar Function (2D)
-    # mpl.use('TkAgg')
-    # x = np.linspace(-100, 100, 1000)
-    # y = np.linspace(-100, 100, 1000)
-    # x, y = np.meshgrid(x, y)
-    # z = np.array([optimization_functions.bent_cigar_function(np.array([x, y])) for x, y in zip(x, y)])
-    #
-    # ax = plt.axes(projection="3d")
-    # ax.plot_surface(x, y, z, cmap="viridis")
-    # ax.set_xlabel('x')
-    # ax.set_ylabel('y')
-    # ax.set_zlabel('f(x, y)')
-    # ax.view_init(10, 10)
-    # plt.title("Expanded Schaffer's Function (2D)")
-    # plt.show()
+    # visualize((-100, 100), optimization_functions.bent_cigar_function)
 
 
 def test_levy_function():
@@ -148,20 +82,7 @@ def test_levy_function():
     assert round(optimization_functions.levy_function(np.array([1])), 2) == 0
 
     # plot Levy Function (2D)
-    # mpl.use('TkAgg')
-    # x = np.linspace(-10, 10, 1000)
-    # y = np.linspace(-10, 10, 1000)
-    # x, y = np.meshgrid(x, y)
-    # z = np.array([optimization_functions.levy_function(np.array([x, y])) for x, y in zip(x, y)])
-    #
-    # ax = plt.axes(projection="3d")
-    # ax.plot_surface(x, y, z, cmap="viridis")
-    # ax.set_xlabel('x')
-    # ax.set_ylabel('y')
-    # ax.set_zlabel('f(x, y)')
-    # ax.view_init(10, 10)
-    # plt.title('Levy Function (2D)')
-    # plt.show()
+    # visualize((-10, 10), optimization_functions.levy_function)
 
 
 def test_high_conditioned_elliptic_function():
@@ -173,20 +94,7 @@ def test_high_conditioned_elliptic_function():
     assert round(optimization_functions.high_conditioned_elliptic_function(np.array([0, 0])), 2) == 0
 
     # plot High Conditioned Elliptic Function (2D)
-    # mpl.use('TkAgg')
-    # x = np.linspace(-100, 100, 1000)
-    # y = np.linspace(-100, 100, 1000)
-    # x, y = np.meshgrid(x, y)
-    # z = np.array([optimization_functions.high_conditioned_elliptic_function(np.array([x, y])) for x, y in zip(x, y)])
-    #
-    # ax = plt.axes(projection="3d")
-    # ax.plot_surface(x, y, z, cmap="viridis")
-    # ax.set_xlabel('x')
-    # ax.set_ylabel('y')
-    # ax.set_zlabel('f(x, y)')
-    # ax.view_init(10, 10)
-    # plt.title("High Conditioned Elliptic Function (2D)")
-    # plt.show()
+    # visualize((-100, 100), optimization_functions.high_conditioned_elliptic_function)
 
 
 def test_happycat_function():
@@ -199,20 +107,7 @@ def test_happycat_function():
     assert round(optimization_functions.happycat_function(np.array([-1])), 2) == 0
 
     # plot Happycat Function (2D)
-    # mpl.use('TkAgg')
-    # x = np.linspace(-20, 20, 1000)
-    # y = np.linspace(-20, 20, 1000)
-    # x, y = np.meshgrid(x, y)
-    # z = np.array([optimization_functions.happycat_function(np.array([x, y])) for x, y in zip(x, y)])
-    #
-    # ax = plt.axes(projection="3d")
-    # ax.plot_surface(x, y, z, cmap="viridis")
-    # ax.set_xlabel('x')
-    # ax.set_ylabel('y')
-    # ax.set_zlabel('f(x, y)')
-    # ax.view_init(10, 10)
-    # plt.title('Happycat Function (2D)')
-    # plt.show()
+    # visualize((-20, 20), optimization_functions.happycat_function)
 
 
 def test_discus_function():
@@ -224,20 +119,7 @@ def test_discus_function():
     assert round(optimization_functions.discus_function(np.array([0, 0])), 2) == 0
 
     # plot Discus Function (2D)
-    # mpl.use('TkAgg')
-    # x = np.linspace(-100, 100, 1000)
-    # y = np.linspace(-100, 100, 1000)
-    # x, y = np.meshgrid(x, y)
-    # z = np.array([optimization_functions.discus_function(np.array([x, y])) for x, y in zip(x, y)])
-    #
-    # ax = plt.axes(projection="3d")
-    # ax.plot_surface(x, y, z, cmap="viridis")
-    # ax.set_xlabel('x')
-    # ax.set_ylabel('y')
-    # ax.set_zlabel('f(x, y)')
-    # ax.view_init(10, 10)
-    # plt.title("Discus Function (2D)")
-    # plt.show()
+    # visualize((-100, 100), optimization_functions.discus_function)
 
 
 def test_ackleys_function():
@@ -250,20 +132,7 @@ def test_ackleys_function():
     assert round(optimization_functions.ackleys_function(np.array([0])), 2) == 0
 
     # plot Ackley's Function (2D)
-    # mpl.use('TkAgg')
-    # x = np.linspace(-32.768, 32.768, 1000)
-    # y = np.linspace(-32.768, 32.768, 1000)
-    # x, y = np.meshgrid(x, y)
-    # z = np.array([optimization_functions.ackleys_function(np.array([x, y])) for x, y in zip(x, y)])
-    #
-    # ax = plt.axes(projection="3d")
-    # ax.plot_surface(x, y, z, cmap="viridis")
-    # ax.set_xlabel('x')
-    # ax.set_ylabel('y')
-    # ax.set_zlabel('f(x, y)')
-    # ax.view_init(10, 10)
-    # plt.title("Ackley's Function (2D)")
-    # plt.show()
+    # visualize((-32.768, 32.768), optimization_functions.ackleys_function)
 
 
 def test_schaffers_f7_function():
@@ -275,20 +144,7 @@ def test_schaffers_f7_function():
     assert round(optimization_functions.schaffers_f7_function(np.array([0, 0])), 2) == 0
 
     # plot Schaffer's F7 Function (2D)
-    # mpl.use('TkAgg')
-    # x = np.linspace(-100, 100, 1000)
-    # y = np.linspace(-100, 100, 1000)
-    # x, y = np.meshgrid(x, y)
-    # z = np.array([optimization_functions.schaffers_f7_function(np.array([x, y])) for x, y in zip(x, y)])
-    #
-    # ax = plt.axes(projection="3d")
-    # ax.plot_surface(x, y, z, cmap="viridis")
-    # ax.set_xlabel('x')
-    # ax.set_ylabel('y')
-    # ax.set_zlabel('f(x, y)')
-    # ax.view_init(10, 10)
-    # plt.title("Schaffer's F7 Function (2D)")
-    # plt.show()
+    # visualize((-100, 100), optimization_functions.schaffers_f7_function)
 
 
 def test_hgbat_function():
@@ -301,23 +157,10 @@ def test_hgbat_function():
     assert round(optimization_functions.hgbat_function(np.array([-1])), 2) == 0
 
     # plot HGBat Function (2D)
-    # mpl.use('TkAgg')
-    # x = np.linspace(-15, 15, 1000)
-    # y = np.linspace(-15, 15, 1000)
-    # x, y = np.meshgrid(x, y)
-    # z = np.array([optimization_functions.hgbat_function(np.array([x, y])) for x, y in zip(x, y)])
-    #
-    # ax = plt.axes(projection="3d")
-    # ax.plot_surface(x, y, z, cmap="viridis")
-    # ax.set_xlabel('x')
-    # ax.set_ylabel('y')
-    # ax.set_zlabel('f(x, y)')
-    # ax.view_init(10, 10)
-    # plt.title('HGBat Function (2D)')
-    # plt.show()
+    # visualize((-15, 15), optimization_functions.hgbat_function)
 
 
-def test_schaffers_f7_function():
+def test_griewanks_function():
     # global minimum for different dimensions tested
     assert round(optimization_functions.griewanks_function(np.array([0, 0, 0, 0, 0, 0])), 2) == 0
     assert round(optimization_functions.griewanks_function(np.array([0, 0, 0, 0, 0])), 2) == 0
@@ -326,17 +169,4 @@ def test_schaffers_f7_function():
     assert round(optimization_functions.griewanks_function(np.array([0, 0])), 2) == 0
 
     # plot Griewank's F7 Function (2D)
-    # mpl.use('TkAgg')
-    # x = np.linspace(-100, 100, 1000)
-    # y = np.linspace(-100, 100, 1000)
-    # x, y = np.meshgrid(x, y)
-    # z = np.array([optimization_functions.griewanks_function(np.array([x, y])) for x, y in zip(x, y)])
-    #
-    # ax = plt.axes(projection="3d")
-    # ax.plot_surface(x, y, z, cmap="viridis")
-    # ax.set_xlabel('x')
-    # ax.set_ylabel('y')
-    # ax.set_zlabel('f(x, y)')
-    # ax.view_init(10, 10)
-    # plt.title("Griewank's F7 Function (2D)")
-    # plt.show()
+    # visualize((-100, 100), optimization_functions.griewanks_function)
