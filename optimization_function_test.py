@@ -1,6 +1,6 @@
 import optimization_functions
 import numpy as np
-# from optimization_functions import visualize
+from optimization_functions import visualize
 
 
 def test_rastrigins_function():
@@ -44,7 +44,7 @@ def test_rosenbrock_function():
     assert round(optimization_functions.rosenbrock_function(np.array([1])), 2) == 0
 
     # plot Rosenbrock's Function (2D)
-    # visualize((-10, 10), optimization_functions.rosenbrock_function)
+    visualize((-10, 10), optimization_functions.rosenbrock_function)
 
 
 def test_expanded_schaffers_function():
