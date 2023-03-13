@@ -19,3 +19,14 @@ def zakharov_function(vec: np.ndarray) -> float:
     :rtype: float
     """
     return sum([x**2 for x in vec]) + sum([0.5 * x for x in vec])**2 + sum([0.5 * x for x in vec])**4
+
+
+def rosenbrock_function(vec: np.ndarray) -> float:
+    """
+
+    :param vec: real numbers vector, usually includes numbers from [-5, 10]
+    :type vec: numpy.ndarray
+    :return: value of function
+    :rtype: float
+    """
+    return sum([100 * (x1**2 - x2)**2 + (x2 - 1)**2 for x1, x2 in zip(vec[:-1], vec[1:])])

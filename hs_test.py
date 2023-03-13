@@ -8,8 +8,9 @@ def test_reproduction():
     optimizer = HS(10000, dimensions, boundaries)
     population = optimizer.init_population(5)
     child = optimizer.reproduction(population)
-
     assert len(child) == dimensions
+
+    # TODO: sometimes fails
     assert all(boundaries[0] <= gene <= boundaries[1] for gene in child)
 
 
