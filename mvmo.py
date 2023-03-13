@@ -32,7 +32,7 @@ class MVMO(EvolutionaryAlgorithm):
         self.val_shape_factor_sd = val_shape_factor_sd
         self.kd = 0.0505 / self.dimensions + 1.0
 
-    def optimize(self, population: list[np.ndarray]):
+    def optimize(self, population: list[np.ndarray], optimize_function: callable):
         # TODO: documentation
         normalized_population = self.normalize_population(population)
         best_population = best_individual = None
@@ -42,7 +42,7 @@ class MVMO(EvolutionaryAlgorithm):
         for _ in tqdm(range(self.iterations)):
             # TODO: n_best_size is magic constant, change it
             best_population, mean_individual, var_individual = self.evaluation(normalized_population,
-                                                                               rastrigins_function, 10,
+                                                                               optimize_function, 10,
                                                                                best_population)
 
             if best_individual is None:
@@ -164,7 +164,7 @@ if __name__ == '__main__':
     boundaries = (-5.12, 5.12)
     optimizer = MVMO(10000, 6, 3, boundaries)
     population = optimizer.init_population(1000)
-    optimizer.optimize(population)
+    optimizer.optimize(population, rastrigins_function)
 
 
 #TODO: check if boundaries are treated as sharp limits
