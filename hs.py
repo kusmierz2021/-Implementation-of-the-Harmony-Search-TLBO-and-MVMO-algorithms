@@ -39,7 +39,7 @@ class HS(EvolutionaryAlgorithm):
         for ind in range(self.dimensions):
             if self.hmcr is not None:
                 if random.random() > self.hmcr:
-                    child[ind] = random.uniform(boundaries[0], boundaries[1])
+                    child[ind] = random.uniform(self.boundaries[0], self.boundaries[1])
                 else:
                     child[ind] = population[randint(0, len(population))][ind]
         return child
