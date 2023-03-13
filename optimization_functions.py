@@ -102,3 +102,15 @@ def discus_function(vec: np.ndarray) -> float:
         :rtype: float
     """
     return 10**6 * vec[0]**2 + sum([x**2 for x in vec[1:]])
+
+
+def ackleys_function(vec: np.ndarray) -> float:
+    """
+
+        :param vec: real numbers vector, usually includes numbers from [-32.768, 32.768]
+        :type vec: numpy.ndarray
+        :return: value of function
+        :rtype: float
+    """
+    d = len(vec)
+    return -20 * np.exp(-0.2 * np.sqrt(1/d * sum([x**2 for x in vec]))) - np.exp(1/d * sum([np.cos(2*math.pi*x) for x in vec])) + 20 + math.e
