@@ -30,3 +30,17 @@ def rosenbrock_function(vec: np.ndarray) -> float:
     :rtype: float
     """
     return sum([100 * (x1**2 - x2)**2 + (x2 - 1)**2 for x1, x2 in zip(vec[:-1], vec[1:])])
+
+
+def expanded_schaffers_function(vec: np.ndarray) -> float:
+    """
+
+    :param vec: real numbers vector, usually includes numbers from [-100, 100]
+    :type vec: numpy.ndarray
+    :return: value of function
+    :rtype: float
+    """
+    def schaffers_function(x: float, y: float) -> float:
+        return 0.5 + (np.sin((x**2 + y**2))**2 - 0.5) / (1 + 0.001 * (x**2 + y**2))**2
+
+    return sum([schaffers_function(vec[ind % len(vec)], vec[(ind+1) % len(vec)]) for ind in range(len(vec))])
