@@ -83,7 +83,7 @@ def test_rosenbrock_function():
     # ax.set_ylabel('y')
     # ax.set_zlabel('f(x, y)')
     # ax.view_init(10, 10)
-    # plt.title('Zakharov Function (2D)')
+    # plt.title('Rosenbrock's Function (2D)')
     # plt.show()
 
 
@@ -135,4 +135,30 @@ def test_bent_cigar_function():
     # ax.set_zlabel('f(x, y)')
     # ax.view_init(10, 10)
     # plt.title("Expanded Schaffer's Function (2D)")
+    # plt.show()
+
+
+def test_levy_function():
+    # global minimum for different dimensions tested
+    assert round(optimization_functions.levy_function(np.array([1, 1, 1, 1, 1, 1])), 2) == 0
+    assert round(optimization_functions.levy_function(np.array([1, 1, 1, 1, 1])), 2) == 0
+    assert round(optimization_functions.levy_function(np.array([1, 1, 1, 1])), 2) == 0
+    assert round(optimization_functions.levy_function(np.array([1, 1, 1])), 2) == 0
+    assert round(optimization_functions.levy_function(np.array([1, 1])), 2) == 0
+    assert round(optimization_functions.levy_function(np.array([1])), 2) == 0
+
+    # plot Levy Function (2D)
+    # mpl.use('TkAgg')
+    # x = np.linspace(-10, 10, 1000)
+    # y = np.linspace(-10, 10, 1000)
+    # x, y = np.meshgrid(x, y)
+    # z = np.array([optimization_functions.levy_function(np.array([x, y])) for x, y in zip(x, y)])
+    #
+    # ax = plt.axes(projection="3d")
+    # ax.plot_surface(x, y, z, cmap="viridis")
+    # ax.set_xlabel('x')
+    # ax.set_ylabel('y')
+    # ax.set_zlabel('f(x, y)')
+    # ax.view_init(10, 10)
+    # plt.title('Levy Function (2D)')
     # plt.show()
