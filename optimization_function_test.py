@@ -276,8 +276,8 @@ def test_schaffers_f7_function():
 
     # plot Schaffer's F7 Function (2D)
     # mpl.use('TkAgg')
-    # x = np.linspace(-100, 100, 10000)
-    # y = np.linspace(-100, 100, 10000)
+    # x = np.linspace(-100, 100, 1000)
+    # y = np.linspace(-100, 100, 1000)
     # x, y = np.meshgrid(x, y)
     # z = np.array([optimization_functions.schaffers_f7_function(np.array([x, y])) for x, y in zip(x, y)])
     #
@@ -288,4 +288,30 @@ def test_schaffers_f7_function():
     # ax.set_zlabel('f(x, y)')
     # ax.view_init(10, 10)
     # plt.title("Schaffer's F7 Function (2D)")
+    # plt.show()
+
+
+def test_hgbat_function():
+    # global minimum for different dimensions tested
+    assert round(optimization_functions.hgbat_function(np.array([-1, -1, -1, -1, -1, -1])), 2) == 0
+    assert round(optimization_functions.hgbat_function(np.array([-1, -1, -1, -1, -1])), 2) == 0
+    assert round(optimization_functions.hgbat_function(np.array([-1, -1, -1, -1])), 2) == 0
+    assert round(optimization_functions.hgbat_function(np.array([-1, -1, -1])), 2) == 0
+    assert round(optimization_functions.hgbat_function(np.array([-1, -1])), 2) == 0
+    assert round(optimization_functions.hgbat_function(np.array([-1])), 2) == 0
+
+    # plot HGBat Function (2D)
+    # mpl.use('TkAgg')
+    # x = np.linspace(-15, 15, 1000)
+    # y = np.linspace(-15, 15, 1000)
+    # x, y = np.meshgrid(x, y)
+    # z = np.array([optimization_functions.hgbat_function(np.array([x, y])) for x, y in zip(x, y)])
+    #
+    # ax = plt.axes(projection="3d")
+    # ax.plot_surface(x, y, z, cmap="viridis")
+    # ax.set_xlabel('x')
+    # ax.set_ylabel('y')
+    # ax.set_zlabel('f(x, y)')
+    # ax.view_init(10, 10)
+    # plt.title('HGBat Function (2D)')
     # plt.show()
