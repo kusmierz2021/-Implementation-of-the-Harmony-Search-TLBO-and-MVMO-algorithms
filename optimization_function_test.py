@@ -188,3 +188,28 @@ def test_high_conditioned_elliptic_function():
     # plt.title("High Conditioned Elliptic Function (2D)")
     # plt.show()
 
+
+def test_happycat_function():
+    # global minimum for different dimensions tested
+    assert round(optimization_functions.happycat_function(np.array([-1, -1, -1, -1, -1, -1])), 2) == 0
+    assert round(optimization_functions.happycat_function(np.array([-1, -1, -1, -1, -1])), 2) == 0
+    assert round(optimization_functions.happycat_function(np.array([-1, -1, -1, -1])), 2) == 0
+    assert round(optimization_functions.happycat_function(np.array([-1, -1, -1])), 2) == 0
+    assert round(optimization_functions.happycat_function(np.array([-1, -1])), 2) == 0
+    assert round(optimization_functions.happycat_function(np.array([-1])), 2) == 0
+
+    # plot Happycat Function (2D)
+    # mpl.use('TkAgg')
+    # x = np.linspace(-20, 20, 1000)
+    # y = np.linspace(-20, 20, 1000)
+    # x, y = np.meshgrid(x, y)
+    # z = np.array([optimization_functions.happycat_function(np.array([x, y])) for x, y in zip(x, y)])
+    #
+    # ax = plt.axes(projection="3d")
+    # ax.plot_surface(x, y, z, cmap="viridis")
+    # ax.set_xlabel('x')
+    # ax.set_ylabel('y')
+    # ax.set_zlabel('f(x, y)')
+    # ax.view_init(10, 10)
+    # plt.title('Happycat Function (2D)')
+    # plt.show()
