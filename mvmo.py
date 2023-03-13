@@ -148,6 +148,7 @@ class MVMO(EvolutionaryAlgorithm):
 
     def evaluation(self, population: list[np.ndarray], fitness_function: callable,
                    n_best_size: int = 10, best_population=None) -> tuple:
+        # TODO: n_best_size
         # TODO: documentation
         if best_population is not None:
             population = population + [ind[0] for ind in best_population]

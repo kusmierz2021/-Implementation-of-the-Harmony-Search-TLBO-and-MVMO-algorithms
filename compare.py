@@ -29,10 +29,10 @@ if __name__ == '__main__':
     # mvmo_optimizer.optimize(mvmo_population, zakharov_function)
 
 
-    hs_optimizer = HS(10_000_000, 6, rosenbrock_boundaries, False, hmcr=0.9)
-    hs_population = hs_optimizer.init_population(10)
-    hs_optimizer.optimize(hs_population, rosenbrock_function)
+    # hs_optimizer = HS(10_000_000, 6, rosenbrock_boundaries, False, hmcr=0.9)
+    # hs_population = hs_optimizer.init_population(10)
+    # hs_optimizer.optimize(hs_population, rosenbrock_function)
 
-    # mvmo_optimizer = MVMO(10_000, 6, zakharov_boundaries, False, mutation_size=3)
-    # mvmo_population = mvmo_optimizer.init_population(100)
-    # mvmo_optimizer.optimize(mvmo_population, zakharov_function)
+    mvmo_optimizer = MVMO(10_000_000, 6, rosenbrock_boundaries, False, mutation_size=3)
+    mvmo_population = mvmo_optimizer.init_population(10000)
+    mvmo_optimizer.optimize(mvmo_population, rosenbrock_function)
