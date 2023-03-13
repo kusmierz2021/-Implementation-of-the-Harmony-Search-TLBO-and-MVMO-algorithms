@@ -5,7 +5,7 @@ from optimization_functions import rastrigins_function
 def test_reproduction():
     dimensions = 6
     boundaries = (-5.12, 5.12)
-    optimizer = HS(10000, dimensions, boundaries)
+    optimizer = HS(10000, dimensions, boundaries, True)
     population = optimizer.init_population(5)
     child = optimizer.reproduction(population)
     assert len(child) == dimensions
@@ -17,7 +17,7 @@ def test_reproduction():
 
 def test_evaluation():
     boundaries = (-5.12, 5.12)
-    optimizer = HS(10000, 6, boundaries)
+    optimizer = HS(10000, 6, boundaries, True)
     population = optimizer.init_population(5)
     child = optimizer.reproduction(population)
     evaluated_population = optimizer.evaluation(population, rastrigins_function, child)

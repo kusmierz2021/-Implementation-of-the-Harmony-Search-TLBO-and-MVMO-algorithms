@@ -7,8 +7,8 @@ import random
 
 
 class HS(EvolutionaryAlgorithm):
-    def __init__(self, iterations: int, dimensions: int, boundaries: tuple[float, float], hmcr: float = None,
-                 par: float = None):
+    def __init__(self, iterations: int, dimensions: int, boundaries: tuple[float, float], maximize: bool,
+                 hmcr: float = None, par: float = None):
         # TODO: implement par parameter feature which seems to be optional
         """
 
@@ -18,20 +18,21 @@ class HS(EvolutionaryAlgorithm):
         :type dimensions:
         :param boundaries:
         :type boundaries:
+        :param maximize:
+        :type maximize: bool
         :param hmcr: ranges from 0.0 to 1.0
         :type hmcr: float
         :param par: ranges from 0.0 to 1.0
         :type par: float
         """
-        super().__init__(iterations, dimensions, boundaries)
+        super().__init__(iterations, dimensions, boundaries, maximize)
         self.hmcr = hmcr
         self.par = par
 
-    @staticmethod
-    def evaluation(population: list[np.ndarray], fitness_function: callable, child: np.ndarray):
+    def evaluation(self, population: list[np.ndarray], fitness_function: callable, child: np.ndarray):
         population = population + [child]
         best_population = sorted([(ind, fitness_function(ind)) for ind in population], key=lambda ind: ind[1],
-                                 reverse=True).copy()[:len(population) - 1]
+                                 reverse=self.maximize).copy()[:len(population) - 1]
         return best_population
 
     def reproduction(self, population: list[np.ndarray]) -> np.ndarray:
@@ -61,6 +62,6 @@ class HS(EvolutionaryAlgorithm):
 
 if __name__ == '__main__':
     boundaries = (-5.12, 5.12)
-    optimizer = HS(10000, 6, boundaries, hmcr=0.9)
+    optimizer = HS(10000, 6, boundaries, True, hmcr=0.9)
     population = optimizer.init_population(100)
     optimizer.optimize(population, rastrigins_function)

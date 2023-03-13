@@ -3,10 +3,11 @@ import numpy as np
 
 class EvolutionaryAlgorithm:
 
-    def __init__(self, iterations: int, dimensions: int, boundaries: tuple[float, float]):
+    def __init__(self, iterations: int, dimensions: int, boundaries: tuple[float, float], maximize: bool):
         self.iterations = iterations
         self.dimensions = dimensions
         self.boundaries = boundaries
+        self.maximize = maximize
 
     def init_population(self, size: int = 2) -> list[np.ndarray]:
         """
