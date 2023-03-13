@@ -3,11 +3,24 @@ import numpy as np
 from numpy.random import randint
 from optimization_functions import rastrigins_function
 from tqdm import tqdm
-
+import random
 
 class HS(EvolutionaryAlgorithm):
     def __init__(self, iterations: int, dimensions: int, boundaries: tuple[float, float], hmcr: float = None,
                  par: float = None):
+        """
+
+        :param iterations:
+        :type iterations:
+        :param dimensions:
+        :type dimensions:
+        :param boundaries:
+        :type boundaries:
+        :param hmcr: ranges from 0.0 to 1.0
+        :type hmcr: float
+        :param par: ranges from 0.0 to 1.0
+        :type par: float
+        """
         super().__init__(iterations, dimensions, boundaries)
         self.hmcr = hmcr
         self.par = par
@@ -21,7 +34,11 @@ class HS(EvolutionaryAlgorithm):
     def reproduction(self, population: list[np.ndarray]) -> np.ndarray:
         child = np.empty(self.dimensions, dtype=float)
         for ind in range(self.dimensions):
-            child[ind] = population[randint(0, len(population))][ind]
+            if self.hmcr is not None:
+                if random.random() > self.hmcr:
+                    child[ind] = random.uniform(boundaries[0], boundaries[1])
+                else:
+                    child[ind] = population[randint(0, len(population))][ind]
         return child
 
     def optimize(self, population: list[np.ndarray], optimize_function: callable):
@@ -41,6 +58,6 @@ class HS(EvolutionaryAlgorithm):
 
 if __name__ == '__main__':
     boundaries = (-5.12, 5.12)
-    optimizer = HS(10000, 6, boundaries)
-    population = optimizer.init_population(10_000)
+    optimizer = HS(10000, 6, boundaries, hmcr=0.9)
+    population = optimizer.init_population(100)
     optimizer.optimize(population, rastrigins_function)
