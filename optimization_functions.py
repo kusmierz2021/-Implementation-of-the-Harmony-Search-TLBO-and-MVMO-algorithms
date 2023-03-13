@@ -56,6 +56,7 @@ def bent_cigar_function(vec: np.ndarray) -> float:
     """
     return vec[0]**2 + 10**6 * sum(x**2 for x in vec[1:])
 
+
 def levy_function(vec: np.ndarray) -> float:
     """
 
@@ -66,3 +67,15 @@ def levy_function(vec: np.ndarray) -> float:
     """
     vec_w = 1 + (vec - 1) / 4
     return np.sin(math.pi * vec_w[0])**2 + (vec_w[-1] - 1)**2 * (1 + np.sin(2 * math.pi * vec_w[-1])**2) + sum([(wi-1)**2 * (1 + 10 * np.sin(math.pi * wi + 1)**2) for wi in vec_w[:-1]])
+
+
+def high_conditioned_elliptic_function(vec: np.ndarray) -> float:
+    """
+
+        :param vec: real numbers vector, usually includes numbers from [-100, 100]
+        :type vec: numpy.ndarray
+        :return: value of function
+        :rtype: float
+    """
+    d = len(vec)
+    return sum([(10**6)**(i/(d-1)) * vec[i]**2 for i in range(d)])
