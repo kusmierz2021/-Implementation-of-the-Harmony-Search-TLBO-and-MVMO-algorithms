@@ -9,6 +9,7 @@ import random
 class HS(EvolutionaryAlgorithm):
     def __init__(self, iterations: int, dimensions: int, boundaries: tuple[float, float], hmcr: float = None,
                  par: float = None):
+        # TODO: implement par parameter feature which seems to be optional
         """
 
         :param iterations:
