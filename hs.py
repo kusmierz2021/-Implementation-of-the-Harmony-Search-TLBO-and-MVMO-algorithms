@@ -2,7 +2,7 @@ from evolutionary_algorithm import EvolutionaryAlgorithm
 import numpy as np
 from numpy.random import randint
 from optimization_functions import rastrigins_function
-
+from tqdm import tqdm
 
 class HS(EvolutionaryAlgorithm):
     def __init__(self, iterations: int, dimensions: int, boundaries: tuple[float, float], hmcr: float = None,
@@ -22,24 +22,24 @@ class HS(EvolutionaryAlgorithm):
             child[ind] = population[randint(0, len(population))][ind]
         return child
 
-    def optimize(self, population: list[np.ndarray]):
+    def optimize(self, population: list[np.ndarray], optimize_function: callable):
+        best_individual = None
+        for _ in tqdm(range(self.iterations)):
 
-        pass
+            child = self.reproduction(population)
+            evaluated_population = self.evaluation(population, optimize_function, child)
+
+            if best_individual is None:
+                best_individual = evaluated_population[0]
+            elif evaluated_population[0][1] > best_individual[1]:
+                best_individual = evaluated_population[0]
+                print(f"new best solution: {best_individual[0]} -> {best_individual[1]}")
+            population = [ind[0] for ind in evaluated_population]
+
 
 if __name__ == '__main__':
     boundaries = (-5.12, 5.12)
     optimizer = HS(10000, 6, boundaries)
-    population = optimizer.init_population(5)
-    child = optimizer.reproduction(population)
-    for ind in population:
-        print(ind)
-
-    print('\n')
-    print('\n')
-    print(child)
-    print('\n')
-    print('\n')
-    population = optimizer.evaluation(population, rastrigins_function, child)
-    for ind in population:
-        print(ind)
+    population = optimizer.init_population(10_000)
+    optimizer.optimize(population, rastrigins_function)
 
