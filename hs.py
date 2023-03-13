@@ -5,6 +5,7 @@ from optimization_functions import rastrigins_function
 from tqdm import tqdm
 import random
 
+
 class HS(EvolutionaryAlgorithm):
     def __init__(self, iterations: int, dimensions: int, boundaries: tuple[float, float], hmcr: float = None,
                  par: float = None):
@@ -25,7 +26,8 @@ class HS(EvolutionaryAlgorithm):
         self.hmcr = hmcr
         self.par = par
 
-    def evaluation(self, population: list[np.ndarray], fitness_function: callable, child: np.ndarray):
+    @staticmethod
+    def evaluation(population: list[np.ndarray], fitness_function: callable, child: np.ndarray):
         population = population + [child]
         best_population = sorted([(ind, fitness_function(ind)) for ind in population], key=lambda ind: ind[1],
                                  reverse=True).copy()[:len(population) - 1]
