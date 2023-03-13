@@ -92,3 +92,13 @@ def happycat_function(vec: np.ndarray) -> float:
     d = len(vec)
     return abs(sum([x**2 for x in vec]) - d)**(1/4) + (0.5 * sum([x**2 for x in vec]) + sum(vec)) / d + 0.5
 
+
+def discus_function(vec: np.ndarray) -> float:
+    """
+
+        :param vec: real numbers vector, usually includes numbers from [-100, 100]
+        :type vec: numpy.ndarray
+        :return: value of function
+        :rtype: float
+    """
+    return 10**6 * vec[0]**2 + sum([x**2 for x in vec[1:]])

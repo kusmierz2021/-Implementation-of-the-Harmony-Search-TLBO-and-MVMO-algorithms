@@ -213,3 +213,28 @@ def test_happycat_function():
     # ax.view_init(10, 10)
     # plt.title('Happycat Function (2D)')
     # plt.show()
+
+
+def test_discus_function():
+    # global minimum for different dimensions tested
+    assert round(optimization_functions.discus_function(np.array([0, 0, 0, 0, 0, 0])), 2) == 0
+    assert round(optimization_functions.discus_function(np.array([0, 0, 0, 0, 0])), 2) == 0
+    assert round(optimization_functions.discus_function(np.array([0, 0, 0, 0])), 2) == 0
+    assert round(optimization_functions.discus_function(np.array([0, 0, 0])), 2) == 0
+    assert round(optimization_functions.discus_function(np.array([0, 0])), 2) == 0
+
+    # plot Discus Function (2D)
+    # mpl.use('TkAgg')
+    # x = np.linspace(-100, 100, 1000)
+    # y = np.linspace(-100, 100, 1000)
+    # x, y = np.meshgrid(x, y)
+    # z = np.array([optimization_functions.discus_function(np.array([x, y])) for x, y in zip(x, y)])
+    #
+    # ax = plt.axes(projection="3d")
+    # ax.plot_surface(x, y, z, cmap="viridis")
+    # ax.set_xlabel('x')
+    # ax.set_ylabel('y')
+    # ax.set_zlabel('f(x, y)')
+    # ax.view_init(10, 10)
+    # plt.title("Discus Function (2D)")
+    # plt.show()
