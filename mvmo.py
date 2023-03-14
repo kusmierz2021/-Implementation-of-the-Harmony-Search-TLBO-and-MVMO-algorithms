@@ -155,7 +155,7 @@ class MVMO(EvolutionaryAlgorithm):
 
         # best_population = normalized individuals with fitness values calculated for denormalized individuals
         denormalized_population = self.denormalize_population(population)
-        best_population = sorted([(n_ind, fitness_function(dn_ind)) for (n_ind, dn_ind) in
+        best_population = sorted([(n_ind, fitness_function(dn_ind)) for n_ind, dn_ind in
                                   zip(population, denormalized_population)], key=lambda ind: ind[1],
                                  reverse=self.maximize).copy()[:n_best_size]
 
