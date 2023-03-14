@@ -1,6 +1,7 @@
 from evolutionary_algorithm import EvolutionaryAlgorithm
 import numpy as np
 from random import random, choice
+from tqdm import tqdm
 
 
 class TLBO(EvolutionaryAlgorithm):
@@ -19,8 +20,19 @@ class TLBO(EvolutionaryAlgorithm):
         super().__init__(iterations, dimensions, boundaries, maximize)
 
     def optimize(self, population: list[np.ndarray], optimize_function: callable):
-        evaluated_mutated_population = self.mutation(population, optimize_function)
-        return evaluated_mutated_population
+        best_individual = self.evaluation(population, optimize_function)[1]
+        print(f"new best: {best_individual} -> {optimize_function(best_individual)}")
+
+        for _ in tqdm(range(self.iterations)):
+            evaluated_mutated_population = self.mutation(population, optimize_function)
+            population = self.crossover(evaluated_mutated_population)
+            potential_best_individual = self.evaluation(population, optimize_function)[1]
+
+            if ((optimize_function(potential_best_individual) > optimize_function(best_individual)) if self.maximize else (optimize_function(potential_best_individual) < optimize_function(best_individual))):
+                best_individual = potential_best_individual
+                print(f"new best solution: {best_individual} -> {optimize_function(best_individual)}")
+
+
 
     def mutation(self, population: list[np.ndarray], fitness_function: callable):
 
