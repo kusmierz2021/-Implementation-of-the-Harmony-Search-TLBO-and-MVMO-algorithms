@@ -54,7 +54,8 @@ class HS(EvolutionaryAlgorithm):
 
             if best_individual is None:
                 best_individual = evaluated_population[0]
-            elif ((evaluated_population[0][1] > best_individual[1]) if self.maximize else (evaluated_population[0][1] < best_individual[1])):
+            elif ((evaluated_population[0][1] > best_individual[1]) if self.maximize
+                  else (evaluated_population[0][1] < best_individual[1])):
                 best_individual = evaluated_population[0]
                 print(f"new best solution: {best_individual[0]} -> {best_individual[1]}")
             population = [ind[0] for ind in evaluated_population]

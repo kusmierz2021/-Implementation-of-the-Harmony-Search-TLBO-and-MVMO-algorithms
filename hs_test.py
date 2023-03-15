@@ -11,7 +11,6 @@ def test_reproduction():
     assert len(child) == dimensions
 
     # TODO: sometimes fails
-    print(child)
     assert all(boundaries[0] <= gene <= boundaries[1] for gene in child)
 
 

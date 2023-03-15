@@ -35,6 +35,7 @@ class MVMO(EvolutionaryAlgorithm):
         self.asymmetry_factor_af = asymmetry_factor_af
         self.val_shape_factor_sd = val_shape_factor_sd
         self.kd = 0.0505 / self.dimensions + 1.0
+        self.n_best_size = 10
 
     def optimize(self, population: list[np.ndarray], optimize_function: callable):
         """
@@ -46,15 +47,12 @@ class MVMO(EvolutionaryAlgorithm):
         :return:
         :rtype:
         """
-        # TODO: documentation
         normalized_population = self.normalize_population(population)
         best_population = best_individual = None
 
-        # TODO: maybe add possibility to choose other stopping criteria
         for _ in tqdm(range(self.iterations)):
-            # TODO: n_best_size is magic constant, change it
             best_population, mean_individual, var_individual = self.evaluation(normalized_population,
-                                                                               optimize_function, 10,
+                                                                               optimize_function, self.n_best_size,
                                                                                best_population)
 
             if best_individual is None:
@@ -66,15 +64,6 @@ class MVMO(EvolutionaryAlgorithm):
 
             normalized_population = self.mutation(normalized_population, mean_individual,
                                                   var_individual, best_individual[0])
-
-    # def init_population(self, size: int = 2) -> list[np.ndarray]:
-    #     """
-    #     Initialize population of given size with individuals of given dimension and constraints
-    #     :param size: size of initialized population
-    #     :return: population (list) of individuals (numpy arrays)
-    #     """
-    #     return [uniform(low=self.boundaries[0], high=self.boundaries[1],
-    #                               size=(self.dimensions,)) for _ in range(size)]
 
     def normalize_population(self, population: list[np.ndarray]):
         """
@@ -94,14 +83,12 @@ class MVMO(EvolutionaryAlgorithm):
 
     @staticmethod
     def transformation(random_gene, mean_gene, si1, si2):
-        # TODO: documentation
         def transform(ui):
             return mean_gene * (1 - math.exp(-1 * ui * si1)) + (1 - mean_gene) * math.exp((ui - 1) * si2)
 
         return transform(random_gene) + (1 - transform(1) + transform(0)) * random_gene - transform(0)
 
     def count_si(self, best_gene, mean_gene, var_gene, last_no_zero_si):
-        # TODO: documentation
         if not np.isfinite(var_gene):
             si1 = si2 = last_no_zero_si
             if last_no_zero_si < self.val_shape_factor_sd:
@@ -159,7 +146,6 @@ class MVMO(EvolutionaryAlgorithm):
     def evaluation(self, population: list[np.ndarray], fitness_function: callable,
                    n_best_size: int = 10, best_population=None) -> tuple:
         # TODO: n_best_size
-        # TODO: documentation
         if best_population is not None:
             population = population + [ind[0] for ind in best_population]
 

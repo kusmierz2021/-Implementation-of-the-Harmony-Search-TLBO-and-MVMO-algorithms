@@ -31,13 +31,14 @@ class TLBO(EvolutionaryAlgorithm):
             if (optimize_function(potential_best_individual) > optimize_function(best_individual)) if self.maximize \
                     else (optimize_function(potential_best_individual) < optimize_function(best_individual)):
                 best_individual = potential_best_individual
-                print(f"new best solution: {best_individual} -> {optimize_function(best_individual)}")
+                print(f"new best: {best_individual} -> {optimize_function(best_individual)}")
 
     def mutation(self, population: list[np.ndarray], fitness_function: callable):
 
         evaluated_population, best_individual, mean_individual = self.evaluation(population, fitness_function)
         mutation_rate = round((random()+1))
-        mutagen = np.array([random() * (best - mutation_rate * mean) for (best, mean) in zip(best_individual, mean_individual)])
+        mutagen = np.array([random() * (best - mutation_rate * mean) for (best, mean)
+                            in zip(best_individual, mean_individual)])
         mutated_population = list(map(lambda ind: ind + mutagen, population))
         evaluated_mutated_population = self.evaluation(mutated_population, fitness_function)[0]
 
@@ -71,7 +72,8 @@ class TLBO(EvolutionaryAlgorithm):
                     new_ind = np.array([g1 + random() * (g1 - g2) for g1, g2 in zip(ind[0], ind_to_cross[0])])
                 else:
                     new_ind = np.array([g1 + random() * (g2 - g1) for g1, g2 in zip(ind[0], ind_to_cross[0])])
-            new_ind = np.array([self.boundaries[0] if gene < self.boundaries[0] else (self.boundaries[1] if gene > self.boundaries[1] else gene) for gene in new_ind])
+            new_ind = np.array([self.boundaries[0] if gene < self.boundaries[0] else
+                                (self.boundaries[1] if gene > self.boundaries[1] else gene) for gene in new_ind])
             crossed_population.append(new_ind)
         return crossed_population
 
