@@ -11,16 +11,17 @@ class MVMO(EvolutionaryAlgorithm):
     def __init__(self, iterations: int, dimensions: int, boundaries: tuple[float, float], maximize: bool,
                  mutation_size: int, shaping_scaling_factor_fs=1.0, asymmetry_factor_af=1.0, val_shape_factor_sd=75.0):
         """
-        :param iterations:
-        :type iterations:
-        :param dimensions:
-        :type dimensions:
+        A Mean-Variance Optimization Algorithm
+        :param iterations: number of iterations during optimization
+        :type iterations: int
+        :param dimensions: number of dimensions of optimization function
+        :type dimensions: int
         :param boundaries: lower and higher limit of the range of every gene
         :type boundaries: tuple of floats
-        :param maximize:
-        :type maximize:
-        :param mutation_size:
-        :type mutation_size:
+        :param maximize: True for maximization, False for minimization
+        :type maximize: bool
+        :param mutation_size: number of genes to be mutated
+        :type mutation_size: int
         :param shaping_scaling_factor_fs: between 0.9 and 1.0 for exploration, between 1.0 and 10.0 for exploitation
         :type shaping_scaling_factor_fs: float
         :param asymmetry_factor_af: between 1.0 and 10.0
@@ -36,6 +37,15 @@ class MVMO(EvolutionaryAlgorithm):
         self.kd = 0.0505 / self.dimensions + 1.0
 
     def optimize(self, population: list[np.ndarray], optimize_function: callable):
+        """
+
+        :param population:
+        :type population:
+        :param optimize_function:
+        :type optimize_function:
+        :return:
+        :rtype:
+        """
         # TODO: documentation
         normalized_population = self.normalize_population(population)
         best_population = best_individual = None
@@ -168,7 +178,7 @@ if __name__ == '__main__':
     boundaries = (-5.12, 5.12)
     optimizer = MVMO(10000, 6, boundaries, True, 3)
     population = optimizer.init_population(1000)
-    optimizer.optimize(population, rastrigins_function)
-
+    # optimizer.optimize(population, rastrigins_function)
+    print(MVMO.__init__.__doc__)
 
 # TODO: check if boundaries are treated as sharp limits

@@ -11,18 +11,18 @@ class HS(EvolutionaryAlgorithm):
                  hmcr: float = None, par: float = None):
         # TODO: implement par parameter feature which seems to be optional
         """
-
-        :param iterations:
-        :type iterations:
-        :param dimensions:
-        :type dimensions:
-        :param boundaries:
-        :type boundaries:
-        :param maximize:
+        Harmony Search Algorithm
+        :param iterations: number of iterations during optimization
+        :type iterations: int
+        :param dimensions: number of dimensions of optimization function
+        :type dimensions: int
+        :param boundaries: lower and higher limit of the range of every gene
+        :type boundaries: tuple of floats
+        :param maximize: True for maximization, False for minimization
         :type maximize: bool
         :param hmcr: ranges from 0.0 to 1.0
         :type hmcr: float
-        :param par: ranges from 0.0 to 1.0
+        :param par: ranges from 0.0 to 1.0, it is optional parameter
         :type par: float
         """
         super().__init__(iterations, dimensions, boundaries, maximize)

@@ -7,15 +7,15 @@ from tqdm import tqdm
 class TLBO(EvolutionaryAlgorithm):
     def __init__(self, iterations: int, dimensions: int, boundaries: tuple[float, float], maximize: bool):
         """
-
-        :param iterations:
-        :type iterations:
-        :param dimensions:
-        :type dimensions:
-        :param boundaries:
-        :type boundaries:
-        :param maximize:
-        :type maximize:
+        Teaching Learning Based Optimization Algorithm
+        :param iterations: number of iterations during optimization
+        :type iterations: int
+        :param dimensions: number of dimensions of optimization function
+        :type dimensions: int
+        :param boundaries: lower and higher limit of the range of every gene
+        :type boundaries: tuple of floats
+        :param maximize: True for maximization, False for minimization
+        :type maximize: bool
         """
         super().__init__(iterations, dimensions, boundaries, maximize)
 
@@ -36,8 +36,8 @@ class TLBO(EvolutionaryAlgorithm):
     def mutation(self, population: list[np.ndarray], fitness_function: callable):
 
         evaluated_population, best_individual, mean_individual = self.evaluation(population, fitness_function)
-        # TODO: Tf parameter missed in mutagen, for now Tf = 1 constantly
-        mutagen = np.array([random() * (best - mean) for (best, mean) in zip(best_individual, mean_individual)])
+        mutation_rate = round((random()+1))
+        mutagen = np.array([random() * (best - mutation_rate * mean) for (best, mean) in zip(best_individual, mean_individual)])
         mutated_population = list(map(lambda ind: ind + mutagen, population))
         evaluated_mutated_population = self.evaluation(mutated_population, fitness_function)[0]
 
