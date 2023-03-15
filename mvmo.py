@@ -57,10 +57,11 @@ class MVMO(EvolutionaryAlgorithm):
 
             if best_individual is None:
                 best_individual = best_population[0]
+                print(f"new best: {self.denormalize_population([best_individual[0]])} -> {best_individual[1]}")
             elif ((best_population[0][1] > best_individual[1])
                   if self.maximize else (best_population[0][1] < best_individual[1])):
                 best_individual = best_population[0]
-                print(f"new best solution: {self.denormalize_population([best_individual[0]])} -> {best_individual[1]}")
+                print(f"new best: {self.denormalize_population([best_individual[0]])} -> {best_individual[1]}")
 
             normalized_population = self.mutation(normalized_population, mean_individual,
                                                   var_individual, best_individual[0])
