@@ -1,6 +1,5 @@
 from evolutionary_algorithm import EvolutionaryAlgorithm
 import numpy as np
-from numpy.random import randint
 from optimization_functions import rastrigins_function
 from tqdm import tqdm
 import random
@@ -42,7 +41,7 @@ class HS(EvolutionaryAlgorithm):
                 if random.random() > self.hmcr:
                     child[ind] = random.uniform(self.boundaries[0], self.boundaries[1])
                 else:
-                    child[ind] = population[randint(0, len(population))][ind]
+                    child[ind] = random.choice(population)[ind]
         return child
 
     def optimize(self, population: list[np.ndarray], optimize_function: callable):

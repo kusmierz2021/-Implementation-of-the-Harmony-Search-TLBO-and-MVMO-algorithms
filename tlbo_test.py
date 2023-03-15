@@ -40,6 +40,6 @@ def test_crossover():
     optimizer = TLBO(1, dimensions, boundaries, maximize=True)
     population = optimizer.init_population(5)
     evaluated_population, best_individual, mean_individual = optimizer.evaluation(population, rastrigins_function)
-    crossed_population = optimizer.crossover(evaluated_population)
+    crossed_population = optimizer.crossover(evaluated_population, rastrigins_function)
     assert len(crossed_population) == len(population)
     assert len(crossed_population[0]) == len(population[0]) == dimensions
