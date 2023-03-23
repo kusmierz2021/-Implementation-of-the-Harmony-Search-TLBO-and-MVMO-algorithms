@@ -65,6 +65,7 @@ class MVMO(EvolutionaryAlgorithm):
 
             normalized_population = self.mutation(normalized_population, mean_individual,
                                                   var_individual, best_individual[0])
+        return best_individual
 
     def normalize_population(self, population: list[np.ndarray]):
         """

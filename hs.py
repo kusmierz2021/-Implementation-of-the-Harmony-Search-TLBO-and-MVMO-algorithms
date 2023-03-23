@@ -59,7 +59,7 @@ class HS(EvolutionaryAlgorithm):
                 best_individual = evaluated_population[0]
                 print(f"new best: {best_individual[0]} -> {best_individual[1]}")
             population = [ind[0] for ind in evaluated_population]
-
+        return best_individual
 
 if __name__ == '__main__':
     boundaries = (-5.12, 5.12)
