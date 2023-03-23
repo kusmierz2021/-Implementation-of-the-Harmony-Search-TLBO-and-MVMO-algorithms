@@ -40,6 +40,7 @@ class TLBO(EvolutionaryAlgorithm):
         mutagen = np.array([random() * (best - mutation_rate * mean) for (best, mean)
                             in zip(best_individual, mean_individual)])
         mutated_population = list(map(lambda ind: ind + mutagen, population))
+        mutated_population = self.ensure_boundaries_population(mutated_population)
         evaluated_mutated_population = self.evaluation(mutated_population, fitness_function)[0]
 
         if self.maximize:
@@ -56,14 +57,29 @@ class TLBO(EvolutionaryAlgorithm):
 
         return evaluated_population, best_individual, mean_individual
 
-    def crossover(self, evaluated_population: list[tuple[np.ndarray, float]], fitness_function: callable) -> list[np.ndarray]:
+    def ensure_boundaries_individual(self, new_ind: np.ndarray) -> np.ndarray:
+        return np.array([self.boundaries[0] if gene < self.boundaries[0] else
+                        (self.boundaries[1] if gene > self.boundaries[1] else gene) for gene in new_ind])
+
+    def ensure_boundaries_population(self, new_pop: list[np.ndarray]) -> list[np.ndarray]:
+        return [self.ensure_boundaries_individual(new_ind) for new_ind in new_pop]
+
+    def crossover(self, evaluated_population: list[tuple[np.ndarray, float]], fitness_function: callable)\
+            -> list[np.ndarray]:
         crossed_population: list[np.ndarray] = []
         for ind in evaluated_population:
             # TODO: caused endless loop
             # while ind[1] == (ind_to_cross := choice(evaluated_population))[1]: pass
-            for _ in range(100_000):
-                if ind[1] != (ind_to_cross := choice(evaluated_population))[1]:
-                    break
+            # for _ in range(100_000):
+            #
+            #     if ind[1] != (ind_to_cross := choice(evaluated_population))[1]:
+            #
+            #         break
+            to_choose = list(filter(lambda individual: individual[1] != ind[1], evaluated_population))
+            if len(to_choose) == 0:
+                return [individual[0] for individual in evaluated_population]
+            else:
+                ind_to_cross = choice(to_choose)
 
             if self.maximize:
                 if ind[1] > ind_to_cross[1]:
@@ -76,9 +92,9 @@ class TLBO(EvolutionaryAlgorithm):
                 else:
                     new_ind = np.array([g1 + random() * (g2 - g1) for g1, g2 in zip(ind[0], ind_to_cross[0])])
 
-            new_ind = new_ind if ((fitness_function(new_ind) > ind[1] and self.maximize) or ((fitness_function(new_ind) < ind[1] and not self.maximize))) else ind[0]
-            new_ind = np.array([self.boundaries[0] if gene < self.boundaries[0] else
-                                (self.boundaries[1] if gene > self.boundaries[1] else gene) for gene in new_ind])
+            new_ind = self.ensure_boundaries_individual(new_ind)
+            new_ind = new_ind if ((fitness_function(new_ind) > ind[1] and self.maximize)
+                                  or (fitness_function(new_ind) < ind[1] and not self.maximize)) else ind[0]
 
             crossed_population.append(new_ind)
         return crossed_population
