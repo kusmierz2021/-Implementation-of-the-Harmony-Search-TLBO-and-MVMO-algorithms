@@ -175,6 +175,12 @@ def visualize(boundaries: tuple[float, float], optimize_function: callable):
 
     ax = plt.axes(projection="3d")
     ax.plot_surface(x, y, z, cmap="viridis")
+
+
+    # ax = plt.axes()
+    # levels = np.linspace(np.min(z), np.min(z)+7, 300)
+    # ax.contour(x, y, z, cmap="viridis", levels=levels)
+
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('f(x, y)')
