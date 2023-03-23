@@ -20,6 +20,15 @@ class TLBO(EvolutionaryAlgorithm):
         super().__init__(iterations, dimensions, boundaries, maximize)
 
     def optimize(self, population: list[np.ndarray], optimize_function: callable):
+        """
+        Searches for the best solution for a given number of iterations
+        :param population: initial population
+        :type population: list[np.ndarray]
+        :param optimize_function:
+        :type optimize_function: callable
+        :return: best from found solutions
+        :rtype: numpy.ndarray
+        """
         best_individual = self.evaluation(population, optimize_function)[1]
         print(f"new best: {best_individual} -> {optimize_function(best_individual)}")
 
@@ -32,9 +41,18 @@ class TLBO(EvolutionaryAlgorithm):
                     else (optimize_function(potential_best_individual) < optimize_function(best_individual)):
                 best_individual = potential_best_individual
                 print(f"new best: {best_individual} -> {optimize_function(best_individual)}")
+        return best_individual
 
     def mutation(self, population: list[np.ndarray], fitness_function: callable):
-
+        """
+        Mutates every individual in the population
+        :param population: population to be mutated
+        :type population: list[numpy.ndarray]
+        :param fitness_function: function to evaluate how close a given solution is to the optimum solution
+        :type fitness_function: callable
+        :return: evaluated mutated population
+        :rtype: list[tuple[numpy.ndarray, float]]
+        """
         evaluated_population, best_individual, mean_individual = self.evaluation(population, fitness_function)
         mutation_rate = round((random()+1))
         mutagen = np.array([random() * (best - mutation_rate * mean) for (best, mean)
@@ -51,6 +69,15 @@ class TLBO(EvolutionaryAlgorithm):
                     in zip(evaluated_mutated_population, evaluated_population)]
 
     def evaluation(self, population: list[np.ndarray], fitness_function: callable):
+        """
+        Counts fitness function value for every individual
+        :param population: population to be evaluated
+        :type population: list[numpy.ndarray]
+        :param fitness_function: function to evaluate how close a given solution is to the optimum solution
+        :type fitness_function: callable
+        :return: evaluated population, best individual, mean individual
+        :rtype: tuple[list[tuple[numpy.ndarray, float]], numpy.ndarray, numpy.ndarray]
+        """
         evaluated_population = [(ind, fitness_function(ind)) for ind in population]
         best_individual = sorted(evaluated_population, key=lambda ind: ind[1], reverse=self.maximize)[0][0]
         mean_individual = np.mean(population, axis=0)
@@ -58,23 +85,39 @@ class TLBO(EvolutionaryAlgorithm):
         return evaluated_population, best_individual, mean_individual
 
     def ensure_boundaries_individual(self, new_ind: np.ndarray) -> np.ndarray:
+        """
+        Sets every gene value to lower/higher boundary value if it crosses the given range
+        :param new_ind: individual to be validated
+        :type new_ind: numpy.ndarray
+        :return: validated individual
+        :rtype: numpy.ndarray
+        """
         return np.array([self.boundaries[0] if gene < self.boundaries[0] else
                         (self.boundaries[1] if gene > self.boundaries[1] else gene) for gene in new_ind])
 
     def ensure_boundaries_population(self, new_pop: list[np.ndarray]) -> list[np.ndarray]:
+        """
+        For the entire population sets every gene value to lower/higher boundary value if it crosses the given range
+        :param new_pop: population which individuals are to validation
+        :type new_pop: list[numpy.ndarray]
+        :return: validated population
+        :rtype: list[numpy.ndarray]
+        """
         return [self.ensure_boundaries_individual(new_ind) for new_ind in new_pop]
 
     def crossover(self, evaluated_population: list[tuple[np.ndarray, float]], fitness_function: callable)\
             -> list[np.ndarray]:
+        """
+        For every individual draws other individual with other fitness function value and crosses them
+        :param evaluated_population: evaluated population
+        :type evaluated_population: list[tuple[numpy.ndarray, float]]
+        :param fitness_function: function to evaluate how close a given solution is to the optimum solution
+        :type fitness_function: callable
+        :return: population after crossover
+        :rtype: list[numpy.ndarray]
+        """
         crossed_population: list[np.ndarray] = []
         for ind in evaluated_population:
-            # TODO: caused endless loop
-            # while ind[1] == (ind_to_cross := choice(evaluated_population))[1]: pass
-            # for _ in range(100_000):
-            #
-            #     if ind[1] != (ind_to_cross := choice(evaluated_population))[1]:
-            #
-            #         break
             to_choose = list(filter(lambda individual: individual[1] != ind[1], evaluated_population))
             if len(to_choose) == 0:
                 return [individual[0] for individual in evaluated_population]
